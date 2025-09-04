@@ -1,0 +1,230 @@
+/* ============================
+   CSS Variables
+   ============================ */
+:root {
+  --font-family: Arial, sans-serif;
+  --body-bg: #f4f6f9;
+  --text-color-primary: #1a202c;
+  --text-color-secondary: #2d3748;
+  --link-color: #3182ce;
+  --link-color-hover: #2c5282;
+  --error-color: #e53e3e;
+  --card-bg: #fff;
+  --card-border: #e2e8f0;
+  --input-border: #cbd5e0;
+  --input-bg-focus: #ebf8ff;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* ============================
+   Base & Layout
+   ============================ */
+body {
+  font-family: var(--font-family);
+  margin: 0;
+  background: var(--body-bg);
+  color: var(--text-color-primary);
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+h1,
+h2 {
+  text-align: center;
+}
+
+/* ============================
+   Forms
+   ============================ */
+form {
+  display: grid;
+  gap: 0.8rem;
+  max-width: 400px;
+  margin: 0 auto 2rem auto;
+  background: var(--card-bg);
+  padding: 1.5rem;
+  border-radius: 6px;
+  box-shadow: var(--shadow-sm);
+}
+
+span[aria-hidden="true"] {
+  color: var(--error-color);
+}
+
+label {
+  font-weight: 600;
+  color: var(--text-color-secondary);
+}
+
+.error {
+  color: var(--error-color);
+  font-size: 0.8rem;
+}
+
+/* General form inputs */
+input:not([type="radio"]),
+select,
+textarea {
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  border: 2px solid var(--input-border);
+  border-radius: 6px;
+  width: 100%;
+  box-sizing: border-box;
+  transition: 0.2s ease;
+}
+
+input:not([type="radio"]):focus,
+select:focus,
+textarea:focus {
+  border-color: var(--link-color-hover);
+  background: var(--input-bg-focus);
+  outline: none;
+}
+
+button {
+  padding: 0.6rem;
+  background: var(--link-color);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s ease;
+}
+
+button:hover {
+  background: var(--link-color-hover);
+}
+
+/* Search bar styling */
+#search {
+  display: block;
+  margin: 1rem auto 1.5rem auto;
+  padding: 0.6rem 1rem;
+  width: 80%;
+  max-width: 400px;
+  font-size: 1rem;
+  border: 2px solid var(--link-color);
+  border-radius: 6px;
+  outline: none;
+  transition: 0.2s ease;
+}
+
+#search:focus {
+  border-color: var(--link-color-hover);
+  background: var(--input-bg-focus);
+}
+
+/* ============================
+   Cards
+   ============================ */
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+  justify-content: center;
+}
+
+.card-person:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.card-person {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 6px;
+  width: 200px;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+}
+
+.card-person img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.6rem;
+  margin: 0.2rem;
+  background: var(--link-color);
+  color: white;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+/* ============================
+   Table
+   ============================ */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem auto;
+  background: var(--card-bg);
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  max-width: 800px;
+}
+
+th {
+  background: #edf2f7;
+  border: 1px solid var(--card-border);
+  padding: 0.75rem;
+  text-align: left;
+  font-weight: 600;
+  color: var(--text-color-secondary);
+}
+
+td {
+  border: 1px solid var(--card-border);
+  padding: 0.75rem;
+  text-align: left;
+  background: var(--card-bg);
+  color: var(--text-color-primary);
+}
+
+/* ============================
+   Accessibility & Mobile
+   ============================ */
+.sr {
+  position: absolute;
+  left: -9999px;
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 1rem;
+  }
+
+  form {
+    max-width: 100%;
+    padding: 1rem;
+  }
+
+  .card-person {
+    width: 100%;
+    max-width: 280px;
+  }
+
+  table {
+    font-size: 0.8rem;
+  }
+
+  th,
+  td {
+    padding: 0.4rem;
+  }
+}
