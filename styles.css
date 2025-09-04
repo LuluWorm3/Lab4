@@ -1,0 +1,171 @@
+/* ============================
+   Academic Blue Theme
+   ============================ */
+body {
+  font-family: Arial, sans-serif;
+  margin: 2rem;
+  background: #f4f6f9;
+  color: #1a202c;
+}
+
+h1, h2 {
+  text-align: center;
+}
+
+form {
+  display: grid;
+  gap: 0.8rem;
+  max-width: 400px;
+  margin: 0 auto 2rem auto;
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+span[aria-hidden="true"] {
+  color: #e53e3e;
+}
+
+label {
+  font-weight: 600;
+  color: #2d3748;
+}
+
+.error {
+  color: #e53e3e;
+  font-size: 0.8rem;
+}
+
+button {
+  padding: 0.6rem;
+  background: #3182ce;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+button:hover {
+  background: #2c5282;
+}
+
+/* Search bar styling */
+#search {
+  display: block;
+  margin: 1rem auto 1.5rem auto; /* center above cards */
+  padding: 0.6rem 1rem;
+  width: 80%;
+  max-width: 400px;
+  font-size: 1rem;
+  border: 2px solid #3182ce;
+  border-radius: 6px;
+  outline: none;
+  transition: 0.2s ease;
+}
+
+#search:focus {
+  border-color: #2c5282;
+  background: #ebf8ff;
+}
+/* ============================
+   Cards
+   ============================ */
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+  justify-content: center;
+}
+
+.card-person {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  width: 200px;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.card-person img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.6rem;
+  margin: 0.2rem;
+  background: #3182ce;
+  color: white;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+/* ============================
+   Table
+   ============================ */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem auto;
+  background: #fff;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  max-width: 800px;
+}
+
+th {
+  background: #edf2f7;
+  border: 1px solid #e2e8f0;
+  padding: 0.75rem;
+  text-align: left;
+  font-weight: 600;
+  color: #2d3748;
+}
+
+td {
+  border: 1px solid #e2e8f0;
+  padding: 0.75rem;
+  text-align: left;
+  background: #fff;
+  color: #1a202c;
+}
+
+/* ============================
+   Accessibility & Mobile
+   ============================ */
+.sr {
+  position: absolute;
+  left: -9999px;
+}
+
+@media (max-width: 600px) {
+  body {
+    margin: 1rem;
+  }
+  form {
+    max-width: 100%;
+    padding: 1rem;
+  }
+  .card-person {
+    width: 100%;
+    max-width: 280px;
+  }
+  table {
+    font-size: 0.8rem;
+  }
+  th, td {
+    padding: 0.4rem;
+  }
+  input, button {
+    font-size: 16px;
+  }
+}

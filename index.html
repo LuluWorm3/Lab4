@@ -4,13 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lab 4 – Registration & Profiles</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+<div class="container">
   <main>
+        <!-- The main heading for the student registration system -->
     <h1>Student Registration</h1>
 
-    <!-- Registration Form -->
+    <!-- 
+      REGISTRATION FORM SECTION
+      1. Complete the registration form (First/Last Name, Email, Programme, Year, Interests, Photo URL).
+      2. Validate inputs (required fields (*), email format, year selection)
+    -->
     <form id="regForm" novalidate>
       <label for="first">First Name <span aria-hidden="true">*</span></label>
       <input type="text" id="first" name="first" required>
@@ -50,12 +56,18 @@
 
     <hr>
 
-    <!-- Cards Section -->
+  <!-- 
+      PROFILE CARDS SECTION
+      3. On submit, create a profile card and add a row to the summary table
+      4. Implement a Remove action that deletes both the card and the corresponding table row
+  -->
     <h2>Profiles</h2>
     <input type="text" id="search" placeholder="Search by name or programme...">
     <div id="cards" class="cards"></div>
 
-    <!-- Summary Table -->
+    <!-- Summary Table 
+      4. Maintain a summary table synchronized with the rendered cards
+     -->
     <h2>Summary</h2>
     <table id="summary">
       <thead>
@@ -69,6 +81,7 @@
       <tbody></tbody>
     </table>
   </main>
+</div>
   <script src="script.js"></script>
 </body>
 </html>

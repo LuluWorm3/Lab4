@@ -1,30 +1,44 @@
 const form = document.getElementById("regForm");
 const live = document.getElementById("live");
 const searchInput = document.getElementById("search");
-let profiles = []; // state array
+let profiles = []; //  this will store all the student data
 
-// On load → restore from LocalStorage
+// Load saved data when page loads
 window.addEventListener("DOMContentLoaded", () => {
+    // try to get saved profiles from localStorage
   const saved = JSON.parse(localStorage.getItem("profiles")) || [];
   profiles = saved;
+     // show all the saved profiles
   profiles.forEach(p => renderProfile(p));
 });
 
-// Form submit
+// Handle form submission
 form.addEventListener("submit", (e) => {
   e.preventDefault();
-
+// get all the form data
   const data = {
-    id: Date.now(), // unique id
+    id: Date.now(), // unique id buy using timestamps
     first: form.first.value.trim(),
     last: form.last.value.trim(),
     email: form.email.value.trim(),
     prog: form.prog.value.trim(),
     year: form.year.value,
     interests: form.interests.value.trim(),
-    photo: form.photo.value.trim() || "https://placehold.co/128"
+    photo: form.photo.value.trim() || `https://picsum.photos/128?t=${Date.now()}`
   };
+    if (!validate(data)) {
+    live.textContent = "⚠️ Please fix the errors before submitting.";
+    return;
+  }
 
+  live.textContent = "✅ Student registered successfully!";
+  profiles.push(data);
+  saveProfiles();
+  renderProfile(data);
+  form.reset();
+});
+  /*
+  // if no photo provided, use a random placeholder
   if (!validate(data)) {
     live.textContent = "Fix errors before submitting.";
     return;
@@ -36,20 +50,20 @@ form.addEventListener("submit", (e) => {
   renderProfile(data);
   form.reset();
 });
-
+*/
 // Validation helper
 function validate(data) {
   let valid = true;
-  if (!data.first) { showError("first", "First name required"); valid = false; }
+  if (!data.first) { showError("first", "First name is required"); valid = false; }
   else showError("first", "");
-  if (!data.last) { showError("last", "Last name required"); valid = false; }
+  if (!data.last) { showError("last", "Last name is required"); valid = false; }
   else showError("last", "");
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
     showError("email", "Enter valid email"); valid = false;
   } else showError("email", "");
-  if (!data.prog) { showError("prog", "Programme required"); valid = false; }
+  if (!data.prog) { showError("prog", "Programme is required"); valid = false; }
   else showError("prog", "");
-  if (!data.year) { showError("year", "Select year"); valid = false; }
+  if (!data.year) { showError("year", " Please Select year"); valid = false; }
   else showError("year", "");
   return valid;
 }
@@ -79,7 +93,7 @@ function renderProfile(data) {
   `;
   document.getElementById("cards").prepend(card);
 
-  // --- Table
+  // --- Table row
   const tr = document.createElement("tr");
   tr.dataset.id = data.id;
   tr.innerHTML = `
@@ -129,7 +143,7 @@ function editProfile(id) {
   removeProfile(id);
 }
 
-// 🔎 Search / Filter
+//  Search / Filter
 searchInput.addEventListener("input", () => {
   const q = searchInput.value.toLowerCase();
   document.querySelectorAll("#cards .card-person").forEach(card => {
