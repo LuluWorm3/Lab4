@@ -3,9 +3,9 @@ const regForm = document.getElementById("regForm");
 const liveMsg = document.getElementById("live");
 const searchBox = document.getElementById("search");
 
-let allProfiles = []; // will hold students
+let allProfiles = []; // this will store all the student data
 
-// load saved data
+// Load saved data when page loads
 window.addEventListener("DOMContentLoaded", () => {
   const saved = localStorage.getItem("profiles");
   if (saved) {
@@ -19,12 +19,13 @@ window.addEventListener("DOMContentLoaded", () => {
   allProfiles.forEach(p => renderProfile(p));
 });
 
-// submit new student
+// submit new student/Handle form submission
 regForm.addEventListener("submit", (e) => {
   e.preventDefault();
+// get all the form data
 
   const data = {
-    id: Date.now(),
+    id: Date.now(), // unique id buy using timestamps
     first: regForm.first.value.trim(),
     last: regForm.last.value.trim(),
     email: regForm.email.value.trim(),
@@ -46,7 +47,7 @@ regForm.addEventListener("submit", (e) => {
   regForm.reset();
 });
 
-// validation
+// validation helper
 function validate(d) {
   let valid = true;
   if (!d.first) { showError("first", "First name required"); valid = false; } else showError("first", "");
@@ -63,7 +64,8 @@ function showError(field, msg) {
   document.getElementById(`err-${field}`).textContent = msg;
 }
 
-// localStorage helpers
+// localStorage helpers to Save to LocalStorage
+
 function saveProfiles() {
   localStorage.setItem("profiles", JSON.stringify(allProfiles));
 }
