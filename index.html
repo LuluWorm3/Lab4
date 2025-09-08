@@ -1,87 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
+  <!-- viewport makes the site mobile-friendly -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Lab 4 – Registration & Profiles</title>
+<<<<<<< HEAD
   <link rel="stylesheet" href="stylesv2.css">
+=======
+  <link rel="stylesheet" href="style.css">
+>>>>>>> 4682ea9 (More readble code)
 </head>
+
 <body>
-<div class="container">
-  <main>
-        <!-- The main heading for the student registration system -->
-    <h1>Student Registration</h1>
+  <div class="container">
+    <main>
+      <h1>Student Registration</h1>
 
-    <!-- 
-      REGISTRATION FORM SECTION
-      1. Complete the registration form (First/Last Name, Email, Programme, Year, Interests, Photo URL).
-      2. Validate inputs (required fields (*), email format, year selection)
-    -->
-    <form id="regForm" novalidate>
-      <label for="first">First Name <span aria-hidden="true">*</span></label>
-      <input type="text" id="first" name="first" required>
-      <small class="error" id="err-first"></small>
+      <!-- =========================
+         FORM: add new student
+         ========================= -->
+      <form id="regForm" novalidate>
+        <label for="first">First Name <span aria-hidden="true">*</span></label>
+        <input type="text" id="first" name="first" required>
+        <small class="error" id="err-first"></small>
 
-      <label for="last">Last Name <span aria-hidden="true">*</span></label>
-      <input type="text" id="last" name="last" required>
-      <small class="error" id="err-last"></small>
+        <label for="last">Last Name <span aria-hidden="true">*</span></label>
+        <input type="text" id="last" name="last" required>
+        <small class="error" id="err-last"></small>
 
-      <label for="email">Email <span aria-hidden="true">*</span></label>
-      <input type="email" id="email" name="email" required>
-      <small class="error" id="err-email"></small>
+        <label for="email">Email <span aria-hidden="true">*</span></label>
+        <input type="email" id="email" name="email" required>
+        <small class="error" id="err-email"></small>
 
-      <label for="prog">Programme <span aria-hidden="true">*</span></label>
-      <input type="text" id="prog" name="prog" required>
-      <small class="error" id="err-prog"></small>
+        <label for="prog">Programme <span aria-hidden="true">*</span></label>
+        <input type="text" id="prog" name="prog" required>
+        <small class="error" id="err-prog"></small>
 
-      <fieldset>
-        <legend>Year of Study <span aria-hidden="true">*</span></legend>
-        <label><input type="radio" name="year" value="1" required> 1</label>
-        <label><input type="radio" name="year" value="2"> 2</label>
-        <label><input type="radio" name="year" value="3"> 3</label>
-        <label><input type="radio" name="year" value="4"> 4</label>
-      </fieldset>
-      <small class="error" id="err-year"></small>
+        <fieldset>
+          <legend>Year of Study <span aria-hidden="true">*</span></legend>
+          <label><input type="radio" name="year" value="1" required> 1</label>
+          <label><input type="radio" name="year" value="2"> 2</label>
+          <label><input type="radio" name="year" value="3"> 3</label>
+          <label><input type="radio" name="year" value="4"> 4</label>
+        </fieldset>
+        <small class="error" id="err-year"></small>
 
-      <label for="interests">Interests</label>
-      <input type="text" id="interests" name="interests">
+        <label for="interests">Interests</label>
+        <input type="text" id="interests" name="interests">
 
-      <label for="photo">Photo URL</label>
-      <input type="url" id="photo" name="photo" placeholder="https://...">
+        <label for="photo">Photo URL</label>
+        <input type="url" id="photo" name="photo" placeholder="https://...">
 
-      <div aria-live="polite" class="sr" id="live"></div>
+        <!-- live feedback area -->
+        <div aria-live="polite" class="sr" id="live"></div>
 
-      <button type="submit">Add Student</button>
-    </form>
+        <button type="submit">Add Student</button>
+      </form>
 
-    <hr>
+      <hr>
 
-  <!-- 
-      PROFILE CARDS SECTION
-      3. On submit, create a profile card and add a row to the summary table
-      4. Implement a Remove action that deletes both the card and the corresponding table row
-  -->
-    <h2>Profiles</h2>
-    <input type="text" id="search" placeholder="Search by name or programme...">
-    <div id="cards" class="cards"></div>
+      <!-- =========================
+         Profiles + Table
+         ========================= -->
+      <h2>Profiles</h2>
+      <input type="text" id="search" placeholder="Search by name or programme...">
+      <div id="cards" class="cards"></div>
 
-    <!-- Summary Table 
-      4. Maintain a summary table synchronized with the rendered cards
-     -->
-    <h2>Summary</h2>
-    <table id="summary">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Programme</th>
-          <th>Year</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-  </main>
-</div>
+      <h2>Summary</h2>
+      <table id="summary">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Programme</th>
+            <th>Year</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </main>
+  </div>
+
   <script src="script.js"></script>
+  <!-- <script src="debug.js"></script>  maybe later for testing -->
 </body>
+
 </html>

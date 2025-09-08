@@ -1,74 +1,127 @@
+
 /* ============================
-   Academic Blue Theme
+   CSS Variables
    ============================ */
-body {
-  font-family: Arial, sans-serif;
-  margin: 2rem;
-  background: #f4f6f9;
-  color: #1a202c;
+:root {
+  --font-family: Arial, sans-serif;
+  --body-bg: #f4f6f9;
+  --text-color-primary: #1a202c;
+  --text-color-secondary: #2d3748;
+  --link-color: #3182ce;
+  --link-color-hover: #2c5282;
+  --error-color: #e53e3e;
+  --card-bg: #fff;
+  --card-border: #e2e8f0;
+  --input-border: #cbd5e0;
+  --input-bg-focus: #ebf8ff;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-h1, h2 {
+/* ============================
+   Base & Layout
+   ============================ */
+body {
+  font-family: var(--font-family);
+  margin: 0;
+  background: var(--body-bg);
+  color: var(--text-color-primary);
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+h1,
+h2 {
   text-align: center;
 }
 
+/* ============================
+   Forms
+   ============================ */
 form {
   display: grid;
   gap: 0.8rem;
   max-width: 400px;
   margin: 0 auto 2rem auto;
-  background: #fff;
+  background: var(--card-bg);
   padding: 1.5rem;
   border-radius: 6px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  box-shadow: var(--shadow-sm);
 }
 
 span[aria-hidden="true"] {
-  color: #e53e3e;
+  color: var(--error-color);
 }
 
 label {
   font-weight: 600;
-  color: #2d3748;
+  color: var(--text-color-secondary);
 }
 
 .error {
-  color: #e53e3e;
+  color: var(--error-color);
   font-size: 0.8rem;
+}
+
+/* General form inputs */
+input:not([type="radio"]),
+select,
+textarea {
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  border: 2px solid var(--input-border);
+  border-radius: 6px;
+  width: 100%;
+  box-sizing: border-box;
+  transition: 0.2s ease;
+}
+
+input:not([type="radio"]):focus,
+select:focus,
+textarea:focus {
+  border-color: var(--link-color-hover);
+  background: var(--input-bg-focus);
+  outline: none;
 }
 
 button {
   padding: 0.6rem;
-  background: #3182ce;
+  background: var(--link-color);
   color: #fff;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   font-weight: 500;
+  transition: background 0.2s ease;
 }
 
 button:hover {
-  background: #2c5282;
+  background: var(--link-color-hover);
 }
 
 /* Search bar styling */
 #search {
   display: block;
-  margin: 1rem auto 1.5rem auto; /* center above cards */
+  margin: 1rem auto 1.5rem auto;
   padding: 0.6rem 1rem;
   width: 80%;
   max-width: 400px;
   font-size: 1rem;
-  border: 2px solid #3182ce;
+  border: 2px solid var(--link-color);
   border-radius: 6px;
   outline: none;
   transition: 0.2s ease;
 }
 
 #search:focus {
-  border-color: #2c5282;
-  background: #ebf8ff;
+  border-color: var(--link-color-hover);
+  background: var(--input-bg-focus);
 }
+
 /* ============================
    Cards
    ============================ */
@@ -80,14 +133,19 @@ button:hover {
   justify-content: center;
 }
 
+.card-person:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
 .card-person {
-  background: #fff;
-  border: 1px solid #e2e8f0;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
   border-radius: 6px;
   width: 200px;
   padding: 1rem;
   text-align: center;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  box-shadow: var(--shadow-sm);
 }
 
 .card-person img {
@@ -101,7 +159,7 @@ button:hover {
   display: inline-block;
   padding: 0.25rem 0.6rem;
   margin: 0.2rem;
-  background: #3182ce;
+  background: var(--link-color);
   color: white;
   border-radius: 4px;
   font-size: 0.75rem;
@@ -115,28 +173,28 @@ table {
   width: 100%;
   border-collapse: collapse;
   margin: 1rem auto;
-  background: #fff;
+  background: var(--card-bg);
   border-radius: 4px;
   overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  box-shadow: var(--shadow-sm);
   max-width: 800px;
 }
 
 th {
   background: #edf2f7;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--card-border);
   padding: 0.75rem;
   text-align: left;
   font-weight: 600;
-  color: #2d3748;
+  color: var(--text-color-secondary);
 }
 
 td {
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--card-border);
   padding: 0.75rem;
   text-align: left;
-  background: #fff;
-  color: #1a202c;
+  background: var(--card-bg);
+  color: var(--text-color-primary);
 }
 
 /* ============================
@@ -148,24 +206,26 @@ td {
 }
 
 @media (max-width: 600px) {
-  body {
-    margin: 1rem;
+  .container {
+    padding: 1rem;
   }
+
   form {
     max-width: 100%;
     padding: 1rem;
   }
+
   .card-person {
     width: 100%;
     max-width: 280px;
   }
+
   table {
     font-size: 0.8rem;
   }
-  th, td {
+
+  th,
+  td {
     padding: 0.4rem;
-  }
-  input, button {
-    font-size: 16px;
   }
 }

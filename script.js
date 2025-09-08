@@ -1,70 +1,61 @@
-const form = document.getElementById("regForm");
-const live = document.getElementById("live");
-const searchInput = document.getElementById("search");
-let profiles = []; //  this will store all the student data
+// grabbing the form + helpers
+const regForm = document.getElementById("regForm");
+const liveMsg = document.getElementById("live");
+const searchBox = document.getElementById("search");
 
-// Load saved data when page loads
+let allProfiles = []; // will hold students
+
+// load saved data
 window.addEventListener("DOMContentLoaded", () => {
-    // try to get saved profiles from localStorage
-  const saved = JSON.parse(localStorage.getItem("profiles")) || [];
-  profiles = saved;
-     // show all the saved profiles
-  profiles.forEach(p => renderProfile(p));
+  const saved = localStorage.getItem("profiles");
+  if (saved) {
+    try {
+      allProfiles = JSON.parse(saved);
+    } catch (e) {
+      console.error("Bad JSON in storage", e);
+      allProfiles = [];
+    }
+  }
+  allProfiles.forEach(p => renderProfile(p));
 });
 
-// Handle form submission
-form.addEventListener("submit", (e) => {
+// submit new student
+regForm.addEventListener("submit", (e) => {
   e.preventDefault();
-// get all the form data
+
   const data = {
-    id: Date.now(), // unique id buy using timestamps
-    first: form.first.value.trim(),
-    last: form.last.value.trim(),
-    email: form.email.value.trim(),
-    prog: form.prog.value.trim(),
-    year: form.year.value,
-    interests: form.interests.value.trim(),
-    photo: form.photo.value.trim() || `https://picsum.photos/128?t=${Date.now()}`
+    id: Date.now(),
+    first: regForm.first.value.trim(),
+    last: regForm.last.value.trim(),
+    email: regForm.email.value.trim(),
+    prog: regForm.prog.value.trim(),
+    year: regForm.year.value,
+    interests: regForm.interests.value.trim(),
+    photo: regForm.photo.value.trim() || `https://picsum.photos/128?t=${Math.random()}`
   };
-    if (!validate(data)) {
-    live.textContent = "⚠️ Please fix the errors before submitting.";
-    return;
-  }
 
-  live.textContent = "✅ Student registered successfully!";
-  profiles.push(data);
-  saveProfiles();
-  renderProfile(data);
-  form.reset();
-});
-  /*
-  // if no photo provided, use a random placeholder
   if (!validate(data)) {
-    live.textContent = "Fix errors before submitting.";
+    liveMsg.textContent = "⚠️ Please fix errors before submitting.";
     return;
   }
-  live.textContent = "Student added successfully.";
 
-  profiles.push(data);
+  liveMsg.textContent = "✅ Student registered successfully!";
+  allProfiles.push(data);
   saveProfiles();
   renderProfile(data);
-  form.reset();
+  regForm.reset();
 });
-*/
-// Validation helper
-function validate(data) {
+
+// validation
+function validate(d) {
   let valid = true;
-  if (!data.first) { showError("first", "First name is required"); valid = false; }
-  else showError("first", "");
-  if (!data.last) { showError("last", "Last name is required"); valid = false; }
-  else showError("last", "");
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
-    showError("email", "Enter valid email"); valid = false;
+  if (!d.first) { showError("first", "First name required"); valid = false; } else showError("first", "");
+  if (!d.last) { showError("last", "Last name required"); valid = false; } else showError("last", "");
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email)) {
+    showError("email", "Invalid email"); valid = false;
   } else showError("email", "");
-  if (!data.prog) { showError("prog", "Programme is required"); valid = false; }
-  else showError("prog", "");
-  if (!data.year) { showError("year", " Please Select year"); valid = false; }
-  else showError("year", "");
+  if (!d.prog) { showError("prog", "Programme required"); valid = false; } else showError("prog", "");
+  if (!d.year) { showError("year", "Pick a year"); valid = false; } else showError("year", "");
   return valid;
 }
 
@@ -72,86 +63,81 @@ function showError(field, msg) {
   document.getElementById(`err-${field}`).textContent = msg;
 }
 
-// Save to LocalStorage
+// localStorage helpers
 function saveProfiles() {
-  localStorage.setItem("profiles", JSON.stringify(profiles));
+  localStorage.setItem("profiles", JSON.stringify(allProfiles));
 }
 
-// Render profile (card + table row)
-function renderProfile(data) {
-  // --- Card
+// render both card + table row
+function renderProfile(p) {
+  // card
   const card = document.createElement("div");
   card.className = "card-person";
-  card.dataset.id = data.id;
+  card.dataset.id = p.id;
   card.innerHTML = `
-    <img src="${data.photo}" alt="${data.first} ${data.last}">
-    <h3>${data.first} ${data.last}</h3>
-    <p><span class="badge">${data.prog}</span> <span class="badge">Year ${data.year}</span></p>
-    <p>${data.interests}</p>
-    <button class="edit-btn">Edit</button>
-    <button class="remove-btn">Remove</button>
-  `;
-  document.getElementById("cards").prepend(card);
-
-  // --- Table row
-  const tr = document.createElement("tr");
-  tr.dataset.id = data.id;
-  tr.innerHTML = `
-    <td>${data.first} ${data.last}</td>
-    <td>${data.prog}</td>
-    <td>${data.year}</td>
-    <td>
+      <img src="${p.photo}" alt="${p.first} ${p.last}">
+      <h3>${p.first} ${p.last}</h3>
+      <p><span class="badge">${p.prog}</span> <span class="badge">Year ${p.year}</span></p>
+      <p>${p.interests}</p>
       <button class="edit-btn">Edit</button>
       <button class="remove-btn">Remove</button>
-    </td>
-  `;
+    `;
+  document.getElementById("cards").prepend(card);
+
+  // table row
+  const tr = document.createElement("tr");
+  tr.dataset.id = p.id;
+  tr.innerHTML = `
+      <td>${p.first} ${p.last}</td>
+      <td>${p.prog}</td>
+      <td>${p.year}</td>
+      <td>
+        <button class="edit-btn">Edit</button>
+        <button class="remove-btn">Remove</button>
+      </td>
+    `;
   document.querySelector("#summary tbody").prepend(tr);
 
-  // --- Actions
-  const removeHandler = () => removeProfile(data.id);
-  const editHandler = () => editProfile(data.id);
-
-  card.querySelector(".remove-btn").addEventListener("click", removeHandler);
-  tr.querySelector(".remove-btn").addEventListener("click", removeHandler);
-
-  card.querySelector(".edit-btn").addEventListener("click", editHandler);
-  tr.querySelector(".edit-btn").addEventListener("click", editHandler);
+  // events
+  card.querySelector(".remove-btn").addEventListener("click", () => removeProfile(p.id));
+  tr.querySelector(".remove-btn").addEventListener("click", () => removeProfile(p.id));
+  card.querySelector(".edit-btn").addEventListener("click", () => editProfile(p.id));
+  tr.querySelector(".edit-btn").addEventListener("click", () => editProfile(p.id));
 }
 
-// Remove
+// remove profile
 function removeProfile(id) {
-  profiles = profiles.filter(p => p.id !== id);
+  allProfiles = allProfiles.filter(x => x.id !== id);
   saveProfiles();
   document.querySelectorAll(`[data-id="${id}"]`).forEach(el => el.remove());
 }
 
-// Edit
+// edit profile
 function editProfile(id) {
-  const profile = profiles.find(p => p.id === id);
-  if (!profile) return;
+  const prof = allProfiles.find(x => x.id === id);
+  if (!prof) return;
 
-  // Fill form with existing data
-  form.first.value = profile.first;
-  form.last.value = profile.last;
-  form.email.value = profile.email;
-  form.prog.value = profile.prog;
-  form.interests.value = profile.interests;
-  form.photo.value = profile.photo;
-  form.querySelector(`input[name="year"][value="${profile.year}"]`).checked = true;
+  regForm.first.value = prof.first;
+  regForm.last.value = prof.last;
+  regForm.email.value = prof.email;
+  regForm.prog.value = prof.prog;
+  regForm.interests.value = prof.interests;
+  regForm.photo.value = prof.photo;
 
-  // Remove old entry before resubmission
+  const yrRadio = regForm.querySelector(`input[name="year"][value="${prof.year}"]`);
+  if (yrRadio) yrRadio.checked = true;
+
+  // remove old entry before resubmit
   removeProfile(id);
 }
 
-//  Search / Filter
-searchInput.addEventListener("input", () => {
-  const q = searchInput.value.toLowerCase();
+// search/filter
+searchBox.addEventListener("input", () => {
+  const q = searchBox.value.toLowerCase();
   document.querySelectorAll("#cards .card-person").forEach(card => {
-    const text = card.textContent.toLowerCase();
-    card.style.display = text.includes(q) ? "block" : "none";
+    card.style.display = card.textContent.toLowerCase().includes(q) ? "block" : "none";
   });
   document.querySelectorAll("#summary tbody tr").forEach(tr => {
-    const text = tr.textContent.toLowerCase();
-    tr.style.display = text.includes(q) ? "" : "none";
+    tr.style.display = tr.textContent.toLowerCase().includes(q) ? "" : "none";
   });
 });
